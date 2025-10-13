@@ -1,0 +1,14 @@
+<% user_name = @resource&.try(:first_name).presence || @email %>
+
+<p>Salut <%= user_name %> !</p>
+
+<% if @resource.try(:unconfirmed_email?) %>
+  <p>On t’informe que ton adresse email va être remplacée par <%= @resource.unconfirmed_email %> sur ton compte Grenoble Roller.</p>
+<% else %>
+  <p>On t’informe que ton adresse email a bien été mise à jour : <%= @resource.email %>.</p>
+<% end %>
+
+<p>Si tu n’es pas à l’origine de cette modification, change ton mot de passe tout de suite depuis ton espace Grenoble Roller.</p>
+
+<p>À très vite,<br>
+Les bénévoles Grenoble Roller</p>

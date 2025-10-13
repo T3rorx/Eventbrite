@@ -1,0 +1,14 @@
+<% user_name = @resource&.try(:first_name).presence || @resource&.try(:email).presence || @email %>
+<% confirmation_link = confirmation_url(@resource, confirmation_token: @token) %>
+
+<p>Salut <%= user_name %> !</p>
+
+<p>Bienvenue chez Grenoble Roller. Ton compte est presque prêt : confirme-le pour rejoindre les sorties et rester informé·e.</p>
+
+<p><%= link_to "Confirmer mon compte", confirmation_link %></p>
+
+<p>Si le bouton ne s’affiche pas, copie-colle ce lien dans ton navigateur :</p>
+<p><%= confirmation_link %></p>
+
+<p>À très vite sur la rando,<br>
+Les bénévoles Grenoble Roller</p>
