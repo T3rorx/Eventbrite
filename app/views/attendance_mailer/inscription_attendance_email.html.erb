@@ -1,11 +1,83 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
-  <body>
-    <h1>Salut <%= "#{@user.first_name}" %> tu es bien inscrit à l'evenement <%= "#{@attendance.event.title}" %> </h1>
-    <p> <%= "#{@user.first_name}" "#{@user.first_name}" "#{@user.first_name}" %> 
-      À très vite sur monsite.fr !</p>
+  <body style="margin:0;padding:0;background-color:#f0fdfa;font-family:Arial, sans-serif;color:#0f172a;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;background-color:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 16px 32px rgba(13,148,136,0.18);">
+            <tr>
+              <td style="padding:28px 32px;background:linear-gradient(135deg,#0f766e,#0ea5e9);">
+                <h1 style="margin:0;font-size:22px;line-height:1.4;font-weight:600;color:#ecfeff;">
+                  Grenoble Roller t’attend sur la ligne de départ !
+                </h1>
+                <p style="margin:12px 0 0;font-size:14px;line-height:1.6;color:#ccfbf1;">
+                  Ton inscription est confirmée, prépare tes rollers et ta bonne humeur.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:32px;">
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Salut <strong><%= @user.first_name %></strong>, tu participeras bien à l'événement&nbsp;:
+                </p>
+                <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:0 0 20px;">
+                  <tr>
+                    <td style="padding:16px;border:1px solid #bae6fd;border-radius:12px;background-color:#ecfeff;">
+                      <p style="margin:0 0 8px;font-size:17px;font-weight:600;color:#0f172a;">
+                        <%= @event.title %>
+                      </p>
+                      <% if @event_start.present? %>
+                        <p style="margin:0;font-size:14px;line-height:1.5;color:#0f172a;">
+                          📅 <strong>Date :</strong> <%= @event_start %>
+                        </p>
+                      <% end %>
+                      <% if @event.location.present? %>
+                        <p style="margin:8px 0 0;font-size:14px;line-height:1.5;color:#0f172a;">
+                          📍 <strong>Lieu :</strong> <%= @event.location %>
+                        </p>
+                      <% end %>
+                      <% if @organizer.present? %>
+                        <p style="margin:8px 0 0;font-size:14px;line-height:1.5;color:#0f172a;">
+                          👤 <strong>Encadré par :</strong> <%= @organizer.first_name %> <%= @organizer.last_name %>
+                        </p>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Pense à vérifier ton matériel (roues, freins, éclairage) et à arriver quelques minutes en avance pour le briefing sécurité.
+                </p>
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0;">
+                  <tr>
+                    <td align="center">
+                      <a href="<%= @url %>" style="display:inline-block;background-color:#0f766e;color:#ecfeff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 28px;border-radius:999px;">
+                        Gérer mon inscription
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  En cas d’empêchement, annule ta participation depuis ton espace ou préviens-nous afin de libérer la place pour un autre patineur.
+                </p>
+                <p style="margin:0;font-size:15px;line-height:1.6;">
+                  À très bientôt sur la rando,<br />
+                  Les bénévoles Grenoble Roller
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:20px 32px;background-color:#ecfeff;text-align:center;font-size:12px;color:#0f766e;">
+                © <%= Time.current.year %> Grenoble Roller · Association loi 1901<br />
+                <a href="<%= @url %>" style="color:#0f766e;text-decoration:none;font-weight:600;">Espace adhérent</a> ·
+                <a href="mailto:contact@grenoble-roller.org" style="color:#0f766e;text-decoration:none;font-weight:600;">contact@grenoble-roller.org</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

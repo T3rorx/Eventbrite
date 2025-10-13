@@ -1,6 +1,17 @@
-Salut <%= @user.first_name %>  !
-==========================================================
+Prêt·e à rouler ! Ton inscription à <%= @event.title %> est validée, <%= @user.first_name %>.
+=========================================================================================
 
-Salut <%= @user.first_name %> tu es bien inscrit à l'evenement <%= @attendance.event.title %>
+Infos pratiques :
+- Titre : <%= @event.title %>
+<% if @event_start.present? %>- Quand : <%= @event_start %><% end %>
+<% if @event.location.present? %>- Où : <%= @event.location %><% end %>
+<% if @organizer.present? %>- Encadré par : <%= @organizer.first_name %> <%= @organizer.last_name %><% end %>
 
-À très vite sur monsite.fr !
+Pense à vérifier ton matériel (roues, freins, éclairage) et à arriver quelques minutes en avance pour le briefing sécurité.
+
+Tu peux mettre à jour ta participation ou retrouver les détails depuis ton espace adhérent : <%= @url %>
+
+En cas d’empêchement, merci d’annuler pour libérer la place à un autre patineur.
+
+À très vite sur la rando,
+Les bénévoles Grenoble Roller

@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
-  <body>
-    <h1>Salut <%= "#{@user.first_name} #{@user.last_name}" %> et bienvenue chez nous !</h1>
-    <p>
-      Tu t'es inscrit sur monsite.fr en utilisant l'e-mail suivant : <%= @user.email %>.
-    </p>
-    <p>
-      Pour accéder à ton espace client, connecte-toi via : <%= @url %>.
-    </p>
-    <p> À très vite sur monsite.fr !
+  <body style="margin:0;padding:0;background-color:#f0fdfa;font-family:Arial, sans-serif;color:#0f172a;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td align="center" style="padding:32px 16px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;background-color:#ffffff;border-radius:18px;overflow:hidden;box-shadow:0 16px 32px rgba(13,148,136,0.18);">
+            <tr>
+              <td style="padding:28px 32px;background:linear-gradient(135deg,#0f766e,#0ea5e9);">
+                <h1 style="margin:0;font-size:24px;line-height:1.4;font-weight:600;color:#ecfeff;">
+                  Bienvenue chez Grenoble Roller, <%= @user.first_name %> !
+                </h1>
+                <p style="margin:12px 0 0;font-size:14px;line-height:1.6;color:#ccfbf1;">
+                  Prêt·e à rouler chaque vendredi soir avec nous dans l’agglomération&nbsp;?
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:32px;">
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Ton inscription est validée avec l’adresse <strong><%= @user.email %></strong>. Tu rejoins une communauté conviviale qui partage les valeurs de sécurité, respect et dynamisme autour du roller urbain.
+                </p>
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Voici comment profiter à fond de l’association&nbsp;:
+                </p>
+                <ul style="margin:0 0 20px 18px;padding:0;font-size:15px;line-height:1.6;color:#0f172a;">
+                  <li>Complète ton profil et découvre les prochaines randos encadrées.</li>
+                  <li>Inscris-toi aux initiations roller et ateliers sécurité.</li>
+                  <li>Retrouve les bénévoles, les bons plans matos et la seconde vie des rollers.</li>
+                </ul>
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0;">
+                  <tr>
+                    <td align="center">
+                      <a href="<%= @url %>" style="display:inline-block;background-color:#0f766e;color:#ecfeff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 30px;border-radius:999px;">
+                        Accéder à mon espace adhérent
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Une question sur le matériel, le bénévolat ou les prochaines randos&nbsp;? Réponds simplement à ce message, l’équipe te répondra rapidement.
+                </p>
+                <p style="margin:0;font-size:15px;line-height:1.6;">
+                  À très bientôt sur l’anneau ou dans les rues de Grenoble,<br />
+                  L’équipe Grenoble Roller
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:20px 32px;background-color:#ecfeff;text-align:center;font-size:12px;color:#0f766e;">
+                © <%= Time.current.year %> Grenoble Roller · Association loi 1901<br />
+                <a href="<%= @url %>" style="color:#0f766e;text-decoration:none;font-weight:600;">Espace adhérent</a> ·
+                <a href="mailto:contact@grenoble-roller.org" style="color:#0f766e;text-decoration:none;font-weight:600;">contact@grenoble-roller.org</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>

@@ -1,10 +1,12 @@
 class AttendanceMailer < ApplicationMailer
-    def inscription_attendance(attendance)
+  def inscription_attendance(attendance)
     @attendance = attendance
-
+    @event = @attendance.event
     @user = @attendance.user
+    @organizer = @event.user
+    @event_start = @event.start_date&.strftime("%d/%m/%Y à %Hh%M")
+    @url = "https://www.grenoble-roller.org/espace-adherent"
 
-    # c'est cet appel à mail() qui permet d'envoyer l’e-mail en définissant destinataire et sujet.
-    mail(to: @user.email, subject: 'Inscription evenement !') 
+    mail(to: @user.email, subject: "Grenoble Roller - Ta place est réservée pour #{@event.title}")
   end
 end
