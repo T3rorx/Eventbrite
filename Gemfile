@@ -18,6 +18,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "faker"
 gem "table_print"
+gem "dotenv-rails"
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -55,6 +56,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "letter_opener"
+  gem "letter_opener_web"
 end
 
 group :test do

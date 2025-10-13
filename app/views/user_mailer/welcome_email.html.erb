@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body style="margin:0;padding:0;background-color:#083344;font-family:Arial, sans-serif;color:#0f172a;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td align="center" style="padding:40px 16px;background:linear-gradient(135deg,#0f766e,#0ea5e9);">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:560px;background:linear-gradient(180deg,#ecfeff 0%,#ffffff 60%,#f0fdfa 100%);border-radius:24px;overflow:hidden;box-shadow:0 28px 40px rgba(8,51,68,0.35);">
+            <tr>
+              <td style="padding:28px 32px 24px;background:linear-gradient(135deg,rgba(15,118,110,0.12),rgba(14,165,233,0.12));">
+                <h1 style="margin:0;font-size:24px;line-height:1.4;font-weight:600;color:#0f172a;">
+                  Bienvenue sur le site Grenoble Roller, <%= @user.first_name %> !
+                </h1>
+                <p style="margin:12px 0 0;font-size:14px;line-height:1.6;color:#036672;">
+                  Tu peux désormais suivre nos randonnées et t’inscrire aux sorties encadrées.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:32px;">
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Ton inscription est enregistrée avec l’adresse <strong><%= @user.email %></strong>. Tu peux l’utiliser pour réserver une place sur les randos du vendredi ou consulter les infos pratiques.
+                </p>
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Quelques idées pour démarrer :
+                </p>
+                <ul style="margin:0 0 20px 18px;padding:0;font-size:15px;line-height:1.6;color:#0f172a;">
+                  <li>Consulte la prochaine rando Grenoble Roller et inscris-toi.</li>
+                  <li>Découvre nos conseils sécurité pour profiter de la sortie en toute sérénité.</li>
+                  <li>Retrouve les photos et comptes rendus des dernières randonnées.</li>
+                </ul>
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin:24px 0;">
+                  <tr>
+                    <td align="center">
+                      <a href="<%= @url %>" style="display:inline-block;background-color:#0f766e;color:#ecfeff;text-decoration:none;font-size:15px;font-weight:600;padding:14px 30px;border-radius:999px;">
+                        Accéder à mon espace Grenoble Roller
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+                <p style="margin:0 0 16px;font-size:15px;line-height:1.6;">
+                  Une question sur les randos, les niveaux ou la météo du soir&nbsp;? Réponds simplement à ce message, un membre du staff te guidera.
+                </p>
+                <p style="margin:0;font-size:15px;line-height:1.6;">
+                  À très bientôt sur l’anneau ou dans les rues de Grenoble,<br />
+                  L’équipe Grenoble Roller
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:20px 32px;background-color:#ecfeff;text-align:center;font-size:12px;color:#0f766e;">
+                © <%= Time.current.year %> Grenoble Roller · Association loi 1901<br />
+                <a href="<%= @url %>" style="color:#0f766e;text-decoration:none;font-weight:600;">Espace adhérent</a> ·
+                <a href="mailto:contact@grenoble-roller.org" style="color:#0f766e;text-decoration:none;font-weight:600;">contact@grenoble-roller.org</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
