@@ -5,6 +5,39 @@
     <p class="lead">Plateforme de gestion d'événements pour la communauté du roller</p>
   </div>
 
+  <div class="mb-5">
+    <h2 class="mb-4">Prochains événements</h2>
+    
+    <% if @upcoming_events.any? %>
+      <div class="row g-3">
+        <% @upcoming_events.each do |event| %>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="h5"><%= event.title %></h3>
+                <p class="mb-2">
+                  <strong>Date :</strong> 
+                  <%= event.start_date.strftime("%d/%m/%Y à %Hh%M") %>
+                </p>
+                <p class="mb-2">
+                  <strong>Lieu :</strong> 
+                  <%= event.location %>
+                </p>
+                <p class="mb-2">
+                  <strong>Organisateur :</strong> 
+                  <%= event.organizer.first_name || event.organizer.email %>
+                </p>
+                <%= link_to "Voir détails", event_path(event), class: "btn btn-gr-primary btn-sm mt-2" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-center">Aucun événement à venir pour le moment.</p>
+    <% end %>
+  </div>
+
   <% if user_signed_in? %>
     <!-- User Dashboard -->
     <div class="row justify-content-center">
@@ -12,7 +45,7 @@
         <div class="card shadow-sm">
           <div class="card-body p-4">
             <h2 class="h4 mb-4 text-gr-primary">
-              <span class="badge badge-gr-success me-2">✓</span>
+              <span class="badge badge-gr-success me-2">OK</span>
               Connecté
             </h2>
             
@@ -22,17 +55,9 @@
             </div>
 
             <div class="d-flex gap-2 flex-wrap">
-              <%= link_to static_pages_secret_path, class: "btn btn-gr-primary" do %>
-                🔒 Page secrète
-              <% end %>
-              
-              <%= link_to edit_user_registration_path, class: "btn btn-gr-outline-primary" do %>
-                ⚙️ Modifier mon profil
-              <% end %>
-              
-              <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-secondary" do %>
-                🚪 Se déconnecter
-              <% end %>
+              <%= link_to "Page secrète", static_pages_secret_path, class: "btn btn-gr-primary" %>
+              <%= link_to "Modifier mon profil", edit_user_registration_path, class: "btn btn-gr-outline-primary" %>
+              <%= link_to "Se déconnecter", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-secondary" %>
             </div>
           </div>
         </div>

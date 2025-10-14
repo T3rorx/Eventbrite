@@ -44,6 +44,7 @@
 .text-gr-dark { color: var(--gr-dark) !important; }
 .text-gr-light { color: var(--gr-light) !important; }
 .text-gr-highlight { color: var(--gr-highlight) !important; }
+.text-gr-glacier { color: var(--gr-glacier) !important; }
 
 /* === Button Variants === */
 .btn-gr-primary {
