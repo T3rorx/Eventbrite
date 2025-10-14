@@ -1,9 +1,8 @@
 <%= form_with(model: event) do |form| %>
   <% if event.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger">
+      <h2 class="h6 mb-2"><%= pluralize(event.errors.count, "erreur") %> :</h2>
+      <ul class="mb-0">
         <% event.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,46 +10,47 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :start_date, style: "display: block" %>
-    <%= form.datetime_field :start_date %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="mb-3">
+    <%= form.label :title, "Titre de l'événement", class: "form-label" %>
+    <%= form.text_field :title, class: "form-control", placeholder: "Ex: Sortie roller nocturne" %>
   </div>
 
-  <div>
-    <%= form.label :duration, style: "display: block" %>
-    <%= form.number_field :duration %>
-  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= form.label :start_date, "Date et heure", class: "form-label" %>
+      <%= form.datetime_field :start_date, class: "form-control" %>
+    </div>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-
-  <div>
-    <%= form.label :price, style: "display: block" %>
-    <%= form.number_field :price %>
-  </div>
-
-  <div>
-    <%= form.label :location, style: "display: block" %>
-    <%= form.text_field :location %>
+    <div class="col-md-6 mb-3">
+      <%= form.label :duration, "Durée (minutes)", class: "form-label" %>
+      <%= form.number_field :duration, class: "form-control", placeholder: "Ex: 120" %>
+    </div>
   </div>
 
   <div class="mb-3">
-    <strong>Organisateur :</strong>
-    <%= form.hidden_field :user_id, value: current_user.id %>
-    <span class="text-gr-glacier">
-      <%= current_user.first_name || current_user.email %>
-    </span>
-    <small class="d-block text-muted">(l'organisateur sera automatiquement défini)</small>
+    <%= form.label :location, "Lieu", class: "form-label" %>
+    <%= form.text_field :location, class: "form-control", placeholder: "Ex: Place Victor Hugo, Grenoble" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= form.label :description, "Description", class: "form-label" %>
+    <%= form.text_area :description, class: "form-control", rows: 4, placeholder: "Décrivez votre événement..." %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :price, "Prix (€)", class: "form-label" %>
+    <%= form.number_field :price, class: "form-control", step: 0.01, placeholder: "0.00" %>
+    <small class="form-text text-muted">Laissez à 0 pour un événement gratuit</small>
+  </div>
+
+  <div class="mb-4 p-3 bg-gr-midnight rounded">
+    <strong>Organisateur :</strong>
+    <span class="text-gr-glacier"><%= current_user.first_name || current_user.email %></span>
+  </div>
+
+  <div class="d-grid">
+    <%= form.submit "Créer l'événement", class: "btn btn-gr-success btn-lg" %>
   </div>
 <% end %>

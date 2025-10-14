@@ -1,10 +1,92 @@
-<p style="color: green"><%= notice %></p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body p-4">
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <div class="profile-avatar mb-4">
+                <div class="avatar-circle">
+                  <i class="fas fa-user fa-3x"></i>
+                </div>
+              </div>
+              <h3 class="h4 mb-1"><%= @user.first_name.present? ? @user.first_name : "Utilisateur" %></h3>
+              <% if @user.last_name.present? %>
+                <p class="text-gr-glacier mb-3"><%= @user.last_name %></p>
+              <% end %>
+            </div>
+            
+            <div class="col-md-8">
+              <h2 class="h3 mb-4">Mon Profil</h2>
+              
+              <div class="profile-info mb-4">
+                <div class="row mb-3">
+                  <div class="col-sm-4">
+                    <strong class="text-gr-highlight">Email :</strong>
+                  </div>
+                  <div class="col-sm-8">
+                    <%= @user.email %>
+                  </div>
+                </div>
+                
+                <% if @user.description.present? %>
+                  <div class="row mb-3">
+                    <div class="col-sm-4">
+                      <strong class="text-gr-highlight">Description :</strong>
+                    </div>
+                    <div class="col-sm-8">
+                      <%= @user.description %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
 
-<%= render @user %>
+              <div class="profile-actions mb-4">
+                <%= link_to "Modifier mes informations", edit_user_registration_path, class: "btn btn-gr-primary me-2" %>
+                <%= link_to "Modifier email/mot de passe", edit_user_registration_path, class: "btn btn-outline-secondary" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
+      <!-- Section Événements créés -->
+      <div class="card mt-4">
+        <div class="card-body p-4">
+          <h3 class="h4 mb-4">Mes Événements Créés</h3>
+          
+          <% if @user.organized_events.any? %>
+            <div class="row g-3">
+              <% @user.organized_events.each do |event| %>
+                <div class="col-md-6">
+                  <div class="card border-gr-primary">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= event.title %></h5>
+                      <p class="card-text">
+                        <small class="text-gr-glacier">
+                          <%= event.start_date.strftime("%d/%m/%Y à %Hh%M") %>
+                        </small>
+                      </p>
+                      <p class="card-text">
+                        <strong>Lieu :</strong> <%= event.location %>
+                      </p>
+                      <p class="card-text">
+                        <strong>Prix :</strong> <%= number_to_currency(event.price, unit: "€") %>
+                      </p>
+                      <%= link_to "Voir l'événement", event_path(event), class: "btn btn-gr-primary btn-sm" %>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <div class="text-center py-4">
+              <p class="text-gr-glacier mb-3">Vous n'avez pas encore créé d'événement.</p>
+              <%= link_to "Créer mon premier événement", new_event_path, class: "btn btn-gr-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

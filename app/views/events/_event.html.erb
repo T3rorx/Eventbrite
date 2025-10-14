@@ -23,7 +23,7 @@
 
   <p>
     <strong>Price:</strong>
-    <%= event.price %>
+    <%= event.price %>$
   </p>
 
   <p>
@@ -32,8 +32,10 @@
   </p>
 
   <p>
+    <%= link_to user_path(event.organizer) do %>
     <strong>Organisateur :</strong>
     <%= event.organizer.first_name || event.organizer.email %>
+    <% end %>
   </p>
 
 </div>
