@@ -1,10 +1,237 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+/* 
+ * Application Stylesheet - Minimal & Clean
+ * Bootstrap is already loaded via CDN
+ * Custom theme colors: Grenoble Roller
  */
+
+/* === Theme Variables === */
+:root {
+  /* Grenoble Roller Color Palette */
+  --gr-night: #0c1a2a;
+  --gr-midnight: #162b44;
+  --gr-ocean: #1f4d80;
+  --gr-glacier: #4fa3d1;
+  --gr-ice: #d9eef7;
+  --gr-ink: #1b1f27;
+  --gr-slate: #5c6a7d;
+  --gr-cloud: #f4f7fa;
+  --gr-highlight: #49dcb1;
+  
+  /* Semantic Colors (Bootstrap compatible) */
+  --gr-primary: var(--gr-ocean);
+  --gr-secondary: var(--gr-slate);
+  --gr-success: var(--gr-highlight);
+  --gr-info: var(--gr-glacier);
+  --gr-dark: var(--gr-night);
+  --gr-light: var(--gr-ice);
+}
+
+/* === Background Utilities === */
+.bg-gr-primary { background-color: var(--gr-primary) !important; }
+.bg-gr-secondary { background-color: var(--gr-secondary) !important; }
+.bg-gr-success { background-color: var(--gr-success) !important; }
+.bg-gr-dark { background-color: var(--gr-dark) !important; }
+.bg-gr-light { background-color: var(--gr-light) !important; }
+.bg-gr-night { background-color: var(--gr-night) !important; }
+.bg-gr-midnight { background-color: var(--gr-midnight) !important; }
+.bg-gr-ocean { background-color: var(--gr-ocean) !important; }
+.bg-gr-glacier { background-color: var(--gr-glacier) !important; }
+
+/* === Text Color Utilities === */
+.text-gr-primary { color: var(--gr-primary) !important; }
+.text-gr-secondary { color: var(--gr-secondary) !important; }
+.text-gr-success { color: var(--gr-success) !important; }
+.text-gr-dark { color: var(--gr-dark) !important; }
+.text-gr-light { color: var(--gr-light) !important; }
+.text-gr-highlight { color: var(--gr-highlight) !important; }
+
+/* === Button Variants === */
+.btn-gr-primary {
+  background-color: var(--gr-ocean);
+  border-color: var(--gr-ocean);
+  color: white;
+}
+
+.btn-gr-primary:hover {
+  background-color: var(--gr-midnight);
+  border-color: var(--gr-midnight);
+  color: white;
+}
+
+.btn-gr-success {
+  background-color: var(--gr-highlight);
+  border-color: var(--gr-highlight);
+  color: var(--gr-dark);
+}
+
+.btn-gr-success:hover {
+  background-color: #3bc9a0;
+  border-color: #3bc9a0;
+  color: var(--gr-dark);
+}
+
+.btn-gr-outline-primary {
+  border-color: var(--gr-ocean);
+  color: var(--gr-ocean);
+}
+
+.btn-gr-outline-primary:hover {
+  background-color: var(--gr-ocean);
+  border-color: var(--gr-ocean);
+  color: white;
+}
+
+/* === Card Variants === */
+.card-gr {
+  border-color: var(--gr-glacier);
+  background-color: var(--gr-light);
+}
+
+.card-gr-dark {
+  background-color: var(--gr-midnight);
+  color: var(--gr-light);
+  border-color: var(--gr-ocean);
+}
+
+/* === Alert Variants === */
+.alert-gr-info {
+  background-color: var(--gr-ice);
+  border-color: var(--gr-glacier);
+  color: var(--gr-ink);
+}
+
+.alert-gr-success {
+  background-color: #e8f8f4;
+  border-color: var(--gr-highlight);
+  color: var(--gr-ink);
+}
+
+/* === Badge Variants === */
+.badge-gr-primary {
+  background-color: var(--gr-ocean);
+  color: white;
+}
+
+.badge-gr-success {
+  background-color: var(--gr-highlight);
+  color: var(--gr-dark);
+}
+
+.badge-gr-info {
+  background-color: var(--gr-glacier);
+  color: white;
+}
+
+/* === Flash Messages === */
+.flash {
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 1200px;
+  border-radius: 0.375rem;
+}
+
+.flash.notice,
+.flash.success {
+  background-color: #e8f8f4;
+  border: 1px solid var(--gr-highlight);
+  color: var(--gr-ink);
+}
+
+.flash.alert,
+.flash.error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+  color: #842029;
+}
+
+/* === Navbar Variant === */
+.navbar-gr {
+  background-color: var(--gr-night) !important;
+}
+
+.navbar-gr .nav-link {
+  color: var(--gr-ice) !important;
+}
+
+.navbar-gr .nav-link:hover {
+  color: var(--gr-highlight) !important;
+}
+
+.navbar-gr .navbar-brand {
+  color: var(--gr-light) !important;
+}
+
+/* Dropdown menu dark theme */
+.dropdown-menu {
+  background-color: rgba(22, 43, 68, 0.98);
+  border-color: rgba(79, 163, 209, 0.3);
+}
+
+.dropdown-item {
+  color: var(--gr-ice);
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--gr-ocean);
+  color: var(--gr-ice);
+}
+
+.dropdown-divider {
+  border-color: rgba(79, 163, 209, 0.3);
+}
+
+/* === Footer === */
+footer {
+  background-color: rgba(12, 26, 42, 0.95) !important;
+  border-top-color: rgba(79, 163, 209, 0.3) !important;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--gr-ice);
+}
+
+footer a {
+  color: var(--gr-glacier) !important;
+}
+
+/* === App Shell === */
+body {
+  background: linear-gradient(135deg, var(--gr-night) 0%, var(--gr-midnight) 50%, var(--gr-ocean) 100%);
+  background-attachment: fixed;
+  color: var(--gr-ice);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell main {
+  flex: 1;
+}
+
+/* Dark theme adjustments */
+.card {
+  background-color: rgba(22, 43, 68, 0.8);
+  border-color: rgba(79, 163, 209, 0.3);
+  color: var(--gr-ice);
+}
+
+.lead {
+  color: var(--gr-ice) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--gr-ice);
+}
+
+/* === Border Utilities === */
+.border-gr-primary { border-color: var(--gr-ocean) !important; }
+.border-gr-success { border-color: var(--gr-highlight) !important; }
+.border-gr-info { border-color: var(--gr-glacier) !important; }

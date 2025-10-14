@@ -22,6 +22,8 @@ class EventsController < ApplicationController
   # POST /events or /events.json
   def create
     @event = Event.new(event_params)
+    # Organizer is the current user (Event belongs_to :organizer, foreign_key: :user_id)
+    @event.user_id = current_user.id
 
     respond_to do |format|
       if @event.save
@@ -60,11 +62,11 @@ class EventsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
-      @event = Event.find(params.expect(:id))
+      @event = Event.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def event_params
-      params.expect(event: [ : , :start_date, :duration, :title, :description, : , :price, :location, :user_id ])
+      params.require(:event).permit(:start_date, :duration, :title, :description, :price, :location)
     end
 end

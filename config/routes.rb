@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "static_pages#index"
+  get "static_pages/secret"
   devise_for :users
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
