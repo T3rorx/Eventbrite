@@ -1,8 +1,7 @@
 class StaticPagesController < ApplicationController
-  def index
-  end
+  before_action :authenticate_user!, only: :secret
 
-  def secret
-    before_action :authenticate_user!, only: [:secret]
-  end
+  def index; end
+
+  def secret; end
 end

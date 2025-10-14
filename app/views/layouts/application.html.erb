@@ -16,6 +16,8 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -23,6 +25,39 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="app-shell">
+      <header class="navbar">
+        <%= link_to root_path, class: "navbar__brand" do %>
+          <img src="/Grenoble_Roller/logo.png" alt="Grenoble Roller">
+          <span>Grenoble Roller</span>
+        <% end %>
+
+        <nav class="navbar__links">
+          <% if user_signed_in? %>
+            <%= link_to "Se déconnecter", destroy_user_session_path, data: { turbo_method: :delete } %>
+          <% else %>
+            <%= link_to "Se connecter", new_user_session_path %>
+          <% end %>
+        </nav>
+      </header>
+
+      <% flash.each do |type, message| %>
+        <div class="flash <%= type %>"><%= message %></div>
+      <% end %>
+
+      <main>
+        <%= yield %>
+      </main>
+
+      <footer>
+        <div class="footer-brand">
+          <img src="/Grenoble_Roller/logo.png" alt="Grenoble Roller" width="60" height="25">
+          Grenoble Roller
+        </div>
+        <div class="footer-social">
+          <%= link_to "Contact", "mailto:contact@grenoble-roller.org" %>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
