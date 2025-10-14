@@ -12,11 +12,6 @@
   <% end %>
 
   <div>
-    <%= form.label : , style: "display: block" %>
-    <%= form.text_field :  %>
-  </div>
-
-  <div>
     <%= form.label :start_date, style: "display: block" %>
     <%= form.datetime_field :start_date %>
   </div>
@@ -33,12 +28,7 @@
 
   <div>
     <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
-  </div>
-
-  <div>
-    <%= form.label : , style: "display: block" %>
-    <%= form.text_field :  %>
+    <%= form.text_area :description %>
   </div>
 
   <div>
@@ -51,9 +41,13 @@
     <%= form.text_field :location %>
   </div>
 
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+  <div class="mb-3">
+    <strong>Organisateur :</strong>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <span class="text-gr-glacier">
+      <%= current_user.first_name || current_user.email %>
+    </span>
+    <small class="d-block text-muted">(l'organisateur sera automatiquement défini)</small>
   </div>
 
   <div>

@@ -1,8 +1,5 @@
 <div id="<%= dom_id event %>">
   <p>
-    <strong> :</strong>
-    <%= event.  %>
-  </p>
 
   <p>
     <strong>Start date:</strong>
@@ -25,11 +22,6 @@
   </p>
 
   <p>
-    <strong> :</strong>
-    <%= event.  %>
-  </p>
-
-  <p>
     <strong>Price:</strong>
     <%= event.price %>
   </p>
@@ -40,8 +32,8 @@
   </p>
 
   <p>
-    <strong>User:</strong>
-    <%= event.user_id %>
+    <strong>Organisateur :</strong>
+    <%= event.organizer.first_name || event.organizer.email %>
   </p>
 
 </div>
