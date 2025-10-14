@@ -1,0 +1,14 @@
+<% user_name = @resource.try(:first_name).presence || @resource.email %>
+<% unlock_link = unlock_url(@resource, unlock_token: @token) %>
+
+<p>Salut <%= user_name %> !</p>
+
+<p>On a verrouillé ton compte Grenoble Roller après plusieurs tentatives infructueuses. Pas d’inquiétude : il suffit de le débloquer pour repartir sur les chapeaux de roues.</p>
+
+<p><%= link_to "Débloquer mon compte", unlock_link %></p>
+<p>Si le bouton ne s’affiche pas, copie-colle ce lien : <%= unlock_link %></p>
+
+<p>Si tu n’es pas à l’origine de ces tentatives, pense à changer ton mot de passe une fois reconnecté·e.</p>
+
+<p>À très vite sur la rando,<br>
+Les bénévoles Grenoble Roller</p>
