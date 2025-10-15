@@ -1,30 +1,66 @@
-<h2>Sign up</h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-body p-4">
+          <h2 class="h3 mb-4 text-center">Créer un compte</h2>
+          
+          <p class="text-center text-gr-glacier mb-4">
+            Rejoignez la communauté roller grenobloise !
+          </p>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
 
+            <div class="mb-3">
+              <%= f.label :email, "Email", class: "form-label" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "votre@email.com" %>
+            </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            <div class="mb-3">
+              <%= f.label :password, "Mot de passe", class: "form-label" %>
+              <% if @minimum_password_length %>
+                <div class="form-text mb-2">
+                  <i class="fas fa-info-circle me-1"></i>
+                  <%= @minimum_password_length %> caractères minimum
+                </div>
+              <% end %>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Votre mot de passe" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password_confirmation, "Confirmation du mot de passe", class: "form-label" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirmez votre mot de passe" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :first_name, "Prénom", class: "form-label" %>
+              <%= f.text_field :first_name, class: "form-control", placeholder: "Votre prénom" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :last_name, "Nom", class: "form-label" %>
+              <%= f.text_field :last_name, class: "form-control", placeholder: "Votre nom" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :description, "Description (optionnel)", class: "form-label" %>
+              <%= f.text_area :description, class: "form-control", placeholder: "Parlez-nous de votre passion pour le roller...", rows: 3 %>
+              <div class="form-text">
+                <i class="fas fa-lightbulb me-1"></i>
+                Décrivez votre niveau, vos préférences, ou vos objectifs
+              </div>
+            </div>
+
+            <div class="d-grid mb-3">
+              <%= f.submit "Créer mon compte", class: "btn btn-gr-primary btn-lg" %>
+            </div>
+          <% end %>
+
+          <hr class="my-4">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

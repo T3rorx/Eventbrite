@@ -1,16 +1,57 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="flash notice"><%= notice %></div>
+<% end %>
 
-<% content_for :title, "Events" %>
+<% content_for :title, "Tous les événements" %>
 
-<h1>Events</h1>
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Tous les événements</h1>
+    <%= link_to "Créer un événement", new_event_path, class: "btn btn-gr-success" %>
+  </div>
 
-<div id="events">
-  <% @events.each do |event| %>
-    <%= render partial: "event", object: event %>
-    <p>
-      <%= link_to "Show this event", event %>
-    </p>
-  <% end %>
+  <div id="events" class="row g-4">
+    <% @events.each do |event| %>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="h5 mb-3"><%= event.title %></h3>
+            
+            <p class="mb-2">
+              <strong>Date :</strong> 
+              <%= event.start_date&.strftime("%d/%m/%Y à %Hh%M") || "À définir" %>
+            </p>
+            
+            <p class="mb-2">
+              <strong>Lieu :</strong> 
+              <%= event.location %>
+            </p>
+            
+            <p class="mb-2">
+              <strong>Organisateur :</strong> 
+              <%= event.organizer.first_name || event.organizer.email %>
+            </p>
+            
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <% if event.price.present? && event.price > 0 %>
+                <span class="badge bg-gr-primary text-white">
+                  <%= number_to_currency(event.price, unit: "€") %>
+                </span>
+              <% else %>
+                <span class="badge bg-gr-success text-white">
+                  Gratuit
+                </span>
+              <% end %>
+              <span class="badge bg-gr-info text-white small">
+                <i class="fas fa-users me-1"></i>
+                <%= event.attendances.count %>
+              </span>
+            </div>
+            
+            <%= link_to "Voir détails", event, class: "btn btn-gr-primary btn-sm w-100" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
-
-<%= link_to "New event", new_event_path %>

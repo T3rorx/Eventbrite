@@ -1,85 +1,136 @@
-<div class="container py-5">
-  <!-- Hero Section -->
-  <div class="text-center mb-5">
-    <h1 class="display-4 fw-bold mb-3">Bienvenue sur Grenoble Roller</h1>
-    <p class="lead">Plateforme de gestion d'événements pour la communauté du roller</p>
-  </div>
-
-  <div class="mb-5">
-    <h2 class="mb-4">Prochains événements</h2>
-    
-    <% if @upcoming_events.any? %>
-      <div class="row g-3">
-        <% @upcoming_events.each do |event| %>
-          <div class="col-md-6">
-            <div class="card">
-              <div class="card-body">
-                <h3 class="h5"><%= event.title %></h3>
-                <p class="mb-2">
-                  <strong>Date :</strong> 
-                  <%= event.start_date.strftime("%d/%m/%Y à %Hh%M") %>
-                </p>
-                <p class="mb-2">
-                  <strong>Lieu :</strong> 
-                  <%= event.location %>
-                </p>
-                <p class="mb-2">
-                  <strong>Organisateur :</strong> 
-                  <%= event.organizer.first_name || event.organizer.email %>
-                </p>
-                <%= link_to "Voir détails", event_path(event), class: "btn btn-gr-primary btn-sm mt-2" %>
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="container py-5">
+    <div class="row align-items-center min-vh-50">
+      <div class="col-lg-6">
+        <div class="hero-content">
+          <h1 class="display-4 fw-bold mb-4 text-gr-ice">
+            Bienvenue sur <span class="text-gr-highlight">Grenoble Roller</span>
+          </h1>
+          <p class="lead mb-4 text-gr-glacier">
+            Découvrez et créez des événements roller dans la région grenobloise. 
+            Rejoignez une communauté passionnée et vivez des moments inoubliables sur roulettes !
+          </p>
+          <div class="hero-stats mb-4">
+            <div class="row text-center">
+              <div class="col-4">
+                <div class="stat-item">
+                  <h3 class="h4 text-gr-highlight mb-1"><%= @total_events %></h3>
+                  <small class="text-gr-glacier"><%= pluralize(@total_events, "Événement") %></small>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="stat-item">
+                  <h3 class="h4 text-gr-highlight mb-1"><%= @total_participants %></h3>
+                  <small class="text-gr-glacier"><%= pluralize(@total_participants, "Participant") %></small>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="stat-item">
+                  <h3 class="h4 text-gr-highlight mb-1"><%= @total_organizers %></h3>
+                  <small class="text-gr-glacier"><%= pluralize(@total_organizers, "Organisateur") %></small>
+                </div>
               </div>
             </div>
           </div>
-        <% end %>
+          <div class="hero-actions">
+            <%= link_to "Voir tous les événements", events_path, class: "btn btn-gr-primary btn-lg w-100 w-md-auto mb-2 mb-md-0 me-md-3" %>
+            <% unless user_signed_in? %>
+              <%= link_to "S'inscrire gratuitement", new_user_registration_path, class: "btn btn-outline-secondary btn-lg w-100 w-md-auto" %>
+            <% end %>
+          </div>
+        </div>
       </div>
-    <% else %>
-      <p class="text-center">Aucun événement à venir pour le moment.</p>
-    <% end %>
-  </div>
-
-  <% if user_signed_in? %>
-    <!-- User Dashboard -->
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card shadow-sm">
-          <div class="card-body p-4">
-            <h2 class="h4 mb-4 text-gr-primary">
-              <span class="badge badge-gr-success me-2">OK</span>
-              Connecté
-            </h2>
-            
-            <div class="mb-3">
-              <strong>Email :</strong>
-              <span class="text-gr-glacier"><%= current_user.email %></span>
-            </div>
-
-            <div class="d-flex gap-2 flex-wrap">
-              <%= link_to "Page secrète", static_pages_secret_path, class: "btn btn-gr-primary" %>
-              <%= link_to "Modifier mon profil", edit_user_registration_path, class: "btn btn-gr-outline-primary" %>
-              <%= link_to "Se déconnecter", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-secondary" %>
-            </div>
+      <div class="col-lg-6 text-center">
+        <div class="hero-image">
+          <div class="roller-icon">
+            <i class="fas fa-skating fa-10x text-gr-highlight opacity-25"></i>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-  <% else %>
-    <!-- Guest Welcome -->
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card shadow-sm border-gr-primary">
-          <div class="card-body text-center p-5">
-            <h2 class="h4 mb-4">Rejoignez la communauté</h2>
-            <p class="mb-4" style="opacity: 0.85;">Créez un compte pour gérer vos événements et participer à la vie du roller grenoblois</p>
-            
-            <div class="d-grid gap-2">
-              <%= link_to "S'inscrire", new_user_registration_path, class: "btn btn-gr-primary btn-lg" %>
-              <%= link_to "Se connecter", new_user_session_path, class: "btn btn-outline-secondary" %>
+<!-- Prochains événements -->
+<div class="container py-5">
+  <div class="section-header text-center mb-5">
+    <h2 class="h2 mb-3">
+      <i class="fas fa-calendar-alt text-gr-highlight me-3"></i>
+      Prochains événements
+    </h2>
+    <p class="lead text-gr-glacier">Ne ratez pas les prochaines sorties roller de la région</p>
+  </div>
+  
+  <% if @upcoming_events.any? %>
+    <div class="row g-3">
+      <% @upcoming_events.each do |event| %>
+        <div class="col-12 col-md-6">
+          <div class="event-card">
+            <div class="card h-100 border-gr-primary">
+              <div class="card-body p-3">
+                <!-- Titre et badges -->
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <h3 class="h6 mb-0 flex-grow-1 me-2"><%= event.title %></h3>
+                  <div class="d-flex flex-column align-items-end gap-1">
+                    <span class="badge bg-gr-primary text-white small">
+                      <%= number_to_currency(event.price, unit: "€") %>
+                    </span>
+                    <span class="badge bg-gr-success text-white small">
+                      <i class="fas fa-users me-1"></i>
+                      <%= event.attendances.count %>
+                    </span>
+                  </div>
+                </div>
+                
+                <!-- Métadonnées compactes -->
+                <div class="event-meta-compact mb-3">
+                  <div class="meta-row-compact">
+                    <i class="fas fa-calendar-alt text-gr-highlight me-2"></i>
+                    <small><%= event.start_date.strftime("%d/%m/%Y à %Hh%M") %></small>
+                  </div>
+                  <div class="meta-row-compact">
+                    <i class="fas fa-map-marker-alt text-gr-highlight me-2"></i>
+                    <small><%= event.location %></small>
+                  </div>
+                  <div class="meta-row-compact">
+                    <i class="fas fa-user text-gr-highlight me-2"></i>
+                    <small><%= event.organizer.first_name.present? ? event.organizer.first_name : event.organizer.email %></small>
+                  </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="event-actions-compact">
+                  <%= link_to "Voir détails", event_path(event), class: "btn btn-gr-primary btn-sm" %>
+                  <% if user_signed_in? %>
+                    <button class="btn btn-outline-secondary btn-sm ms-2" disabled>
+                      <i class="fas fa-user-plus me-1"></i>
+                      S'inscrire
+                    </button>
+                  <% end %>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      <% end %>
+    </div>
+    
+    <div class="text-center mt-5">
+      <%= link_to "Voir tous les événements", events_path, class: "btn btn-outline-secondary btn-lg" %>
+    </div>
+  <% else %>
+    <div class="empty-state text-center py-5">
+      <div class="empty-icon mb-4">
+        <i class="fas fa-calendar-times fa-4x text-gr-glacier opacity-50"></i>
       </div>
+      <h3 class="h4 mb-3">Aucun événement à venir</h3>
+      <p class="text-gr-glacier mb-4">Soyez le premier à organiser un événement roller !</p>
+      <% if user_signed_in? %>
+        <%= link_to "Créer un événement", new_event_path, class: "btn btn-gr-primary btn-lg" %>
+      <% else %>
+        <%= link_to "S'inscrire pour créer", new_user_registration_path, class: "btn btn-gr-primary btn-lg" %>
+      <% end %>
     </div>
   <% end %>
 </div>

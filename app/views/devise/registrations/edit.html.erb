@@ -1,53 +1,97 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body p-4">
+          <h2 class="h3 mb-4 text-center">Modifier mes informations</h2>
+          
+          <p class="text-center text-gr-glacier mb-4">
+            Mettez à jour vos informations personnelles
+          </p>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <br /><%= f.label :first_name %>
-    <%= f.text_field :first_name %>
+            <div class="mb-3">
+              <%= f.label :first_name, "Prénom", class: "form-label" %>
+              <%= f.text_field :first_name, class: "form-control", placeholder: "Votre prénom" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :last_name, "Nom", class: "form-label" %>
+              <%= f.text_field :last_name, class: "form-control", placeholder: "Votre nom" %>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <div class="form-control-plaintext text-gr-glacier">
+                <%= resource.email %>
+                <small class="d-block mt-1">
+                  <i class="fas fa-lock me-1"></i>
+                  L'email ne peut pas être modifié
+                </small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :description, "Description", class: "form-label" %>
+              <%= f.text_area :description, class: "form-control", placeholder: "Parlez-nous de votre passion pour le roller...", rows: 4 %>
+              <div class="form-text">
+                <i class="fas fa-lightbulb me-1"></i>
+                Décrivez votre niveau, vos préférences, ou vos objectifs
+              </div>
+            </div>
+
+            <!-- Champ caché pour ne pas changer le mot de passe -->
+            <%= f.hidden_field :password, value: "" %>
+            <%= f.hidden_field :password_confirmation, value: "" %>
+
+            <div class="mb-3">
+              <%= f.label :current_password, "Mot de passe actuel", class: "form-label" %>
+              <%= f.password_field :current_password, autocomplete: "current-password", 
+                  class: "form-control", placeholder: "Confirmez avec votre mot de passe actuel" %>
+              <div class="form-text">
+                <i class="fas fa-shield-alt me-1"></i>
+                Requis pour valider les modifications
+              </div>
+            </div>
+
+            <div class="d-grid mb-3">
+              <%= f.submit "Mettre à jour", class: "btn btn-gr-primary btn-lg" %>
+            </div>
+          <% end %>
+
+          <hr class="my-4">
+          
+          <!-- Actions supplémentaires -->
+          <div class="row g-3">
+            <div class="col-md-6">
+              <%= link_to "Modifier mon mot de passe", edit_user_password_path, class: "btn btn-outline-secondary w-100" %>
+            </div>
+            <div class="col-md-6">
+              <%= link_to "Retour au profil", user_path(current_user), class: "btn btn-outline-info w-100" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section suppression de compte -->
+      <div class="card mt-4 border-danger">
+        <div class="card-body p-4">
+          <h3 class="h5 mb-3 text-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Zone de danger
+          </h3>
+          <p class="text-gr-glacier mb-3">
+            Supprimer votre compte supprimera définitivement toutes vos données et événements.
+          </p>
+          <%= button_to "Supprimer mon compte", registration_path(resource_name), 
+              data: { confirm: "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.", 
+                      turbo_confirm: "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible." }, 
+              method: :delete, 
+              class: "btn btn-danger" %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <br /><%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </div>
-
-  <div class="field">
-    <br /><%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
-
-  <div class="field">
-    <br /><%= f.label :password %> <i>(Changer le mot de pass)</i>
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <br /><%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <br /><%= f.label :current_password %> <i>(Mot de passe actuel)</i>
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Suppression du compte</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+</div>

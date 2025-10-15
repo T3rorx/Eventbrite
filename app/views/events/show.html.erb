@@ -1,10 +1,155 @@
-<p style="color: green"><%= notice %></p>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <!-- Flash message -->
+      <% if notice %>
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+          <%= notice %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
 
-<%= render @event %>
+      <!-- Header de l'événement -->
+      <div class="card mb-4">
+        <div class="card-body p-4">
+          <div class="row">
+            <div class="col-md-8">
+              <h1 class="h2 mb-3"><%= @event.title %></h1>
+              
+              <div class="event-meta mb-4">
+                <div class="row g-3">
+                  <div class="col-sm-6">
+                    <div class="meta-item">
+                      <i class="fas fa-calendar-alt text-gr-highlight me-2"></i>
+                      <strong>Date :</strong>
+                      <%= @event.start_date.strftime("%d/%m/%Y à %Hh%M") %>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="meta-item">
+                      <i class="fas fa-clock text-gr-highlight me-2"></i>
+                      <strong>Durée :</strong>
+                      <%= @event.duration %> minutes
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="meta-item">
+                      <i class="fas fa-map-marker-alt text-gr-highlight me-2"></i>
+                      <strong>Lieu :</strong>
+                      <%= @event.location %>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="meta-item">
+                      <i class="fas fa-euro-sign text-gr-highlight me-2"></i>
+                      <strong>Prix :</strong>
+                      <%= number_to_currency(@event.price, unit: "€") %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-4 text-md-end">
+              <div class="event-organizer mb-3">
+                <h5 class="text-gr-highlight mb-2">Organisé par</h5>
+                <%= link_to user_path(@event.organizer), class: "organizer-link" do %>
+                  <div class="organizer-info">
+                    <i class="fas fa-user-circle fa-2x me-2"></i>
+                    <div>
+                      <strong><%= @event.organizer.first_name.present? ? @event.organizer.first_name : "Organisateur" %></strong>
+                      <br>
+                      <small class="text-gr-glacier"><%= @event.organizer.email %></small>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+              
+              <% if user_signed_in? && current_user == @event.organizer %>
+                <div class="event-actions">
+                  <%= link_to "Modifier l'événement", edit_event_path(@event), class: "btn btn-gr-primary btn-sm me-2" %>
+                  <%= link_to "Supprimer", event_path(@event), method: :delete, 
+                      confirm: "Êtes-vous sûr de vouloir supprimer cet événement ?",
+                      class: "btn btn-outline-danger btn-sm" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<div>
-  <%= link_to "Edit this event", edit_event_path(@event) %> |
-  <%= link_to "Back to events", events_path %>
+      <!-- Description de l'événement -->
+      <div class="card mb-4">
+        <div class="card-body p-4">
+          <h3 class="h4 mb-3">Description</h3>
+          <div class="event-description">
+            <%= simple_format(@event.description) %>
+          </div>
+        </div>
+      </div>
 
-  <%= button_to "Destroy this event", @event, method: :delete %>
+      <!-- Informations supplémentaires -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body p-4">
+              <h4 class="h5 mb-3">
+                <i class="fas fa-info-circle text-gr-highlight me-2"></i>
+                Informations pratiques
+              </h4>
+              <ul class="list-unstyled">
+                <li class="mb-2">
+                  <i class="fas fa-calendar-check text-gr-glacier me-2"></i>
+                  <strong>Fin de l'événement :</strong>
+                  <%= (@event.start_date + @event.duration.minutes).strftime("%d/%m/%Y à %Hh%M") %>
+                </li>
+                <li class="mb-2">
+                  <i class="fas fa-users text-gr-glacier me-2"></i>
+                  <strong>Participants :</strong>
+                  À venir (fonctionnalité prochaine)
+                </li>
+                <li>
+                  <i class="fas fa-tag text-gr-glacier me-2"></i>
+                  <strong>Catégorie :</strong>
+                  Événement général
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body p-4">
+              <h4 class="h5 mb-3">
+                <i class="fas fa-map text-gr-highlight me-2"></i>
+                Localisation
+              </h4>
+              <p class="mb-3">
+                <i class="fas fa-map-marker-alt text-gr-glacier me-2"></i>
+                <%= @event.location %>
+              </p>
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <small>La carte interactive sera disponible dans une prochaine version.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions de navigation -->
+      <div class="text-center mt-4">
+        <%= link_to "← Retour aux événements", events_path, class: "btn btn-outline-secondary me-2" %>
+        <% if user_signed_in? %>
+          <button class="btn btn-gr-primary" disabled>
+            <i class="fas fa-user-plus me-2"></i>
+            S'inscrire (bientôt disponible)
+          </button>
+        <% else %>
+          <%= link_to "Se connecter pour s'inscrire", new_user_session_path, class: "btn btn-gr-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>

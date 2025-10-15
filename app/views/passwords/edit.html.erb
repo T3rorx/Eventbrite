@@ -1,0 +1,51 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5">
+      <div class="card">
+        <div class="card-body p-4">
+          <h2 class="h3 mb-4 text-center">Modifier mon mot de passe</h2>
+          
+          <p class="text-center text-gr-glacier mb-4">
+            Changez votre mot de passe en toute sécurité
+          </p>
+
+          <%= form_with model: @user, url: password_path, method: :patch, local: true do |f| %>
+            <%= render "shared/error_messages", resource: @user %>
+
+            <div class="mb-3">
+              <%= f.label :current_password, "Mot de passe actuel", class: "form-label" %>
+              <%= f.password_field :current_password, autofocus: true, autocomplete: "current-password", 
+                  class: "form-control", placeholder: "Votre mot de passe actuel" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password, "Nouveau mot de passe", class: "form-label" %>
+              <div class="form-text mb-2">
+                <i class="fas fa-info-circle me-1"></i>
+                <%= @minimum_password_length || 6 %> caractères minimum
+              </div>
+              <%= f.password_field :password, autocomplete: "new-password", 
+                  class: "form-control", placeholder: "Votre nouveau mot de passe" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.label :password_confirmation, "Confirmation du nouveau mot de passe", class: "form-label" %>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", 
+                  class: "form-control", placeholder: "Confirmez votre nouveau mot de passe" %>
+            </div>
+
+            <div class="d-grid mb-3">
+              <%= f.submit "Modifier mon mot de passe", class: "btn btn-gr-primary btn-lg" %>
+            </div>
+          <% end %>
+
+          <hr class="my-4">
+          
+          <div class="text-center">
+            <%= link_to "Retour au profil", user_path(current_user), class: "btn btn-outline-secondary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
