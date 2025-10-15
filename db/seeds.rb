@@ -88,8 +88,8 @@ users_data = [
 # Créer d'abord le compte admin
 admin_user = User.create!(
   email: "user0@yopmail.com",
-  password: "Admin",
-  password_confirmation: "Admin",
+  password: "Admin123",
+  password_confirmation: "Admin123",
   first_name: "Admin",
   last_name: "Grenoble",
   description: "Administrateur de la plateforme Grenoble Roller. Gestion de la communauté et organisation des événements."
@@ -271,7 +271,8 @@ events.each do |event|
   selected_attendees = available_users.sample([attendee_count, available_users.length].min)
   
   selected_attendees.each do |attendee|
-    Attendance.create!(user: attendee, event: event)
+    # Skip callbacks pour éviter l'envoi d'emails pendant le seed
+    Attendance.create!(user: attendee, event: event, skip_inscription_send: true)
   end
   
   puts "  ✅ #{event.title} : #{selected_attendees.length} inscrits"

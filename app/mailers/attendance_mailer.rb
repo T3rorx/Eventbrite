@@ -3,7 +3,7 @@ class AttendanceMailer < ApplicationMailer
     @attendance = attendance
     @event = @attendance.event
     @user = @attendance.user
-    @organizer = @event.user
+    @organizer = @event.organizer
     @event_start = @event.start_date&.strftime("%d/%m/%Y à %Hh%M")
     @url = "https://www.grenoble-roller.org/espace-adherent"
 
