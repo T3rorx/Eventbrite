@@ -14,68 +14,44 @@
 - Les composants Bootstrap (dropdowns) perdent leur état et leurs event listeners
 - Bootstrap JS n'est pas automatiquement réinitialisé après les navigations Turbo
 
-## ✅ **Solution implémentée**
+## ✅ **Solution implémentée (Version Bootstrap Pure)**
 
-### **1. Désactivation Turbo sur les liens dropdown**
+### **1. Boutons dropdown Bootstrap natifs**
 ```erb
 <!-- Dans app/views/layouts/application.html.erb -->
-<a class="nav-link dropdown-toggle" href="#" role="button" 
-   data-bs-toggle="dropdown" data-turbo="false" aria-expanded="false">
-  Mon profil
-</a>
-
-<ul class="dropdown-menu dropdown-menu-end">
-  <li><%= link_to "Mon profil", user_path(current_user), 
-      class: "dropdown-item", data: { turbo: false } %></li>
-  <li><%= link_to "Se déconnecter", destroy_user_session_path, 
-      data: { turbo_method: :delete }, class: "dropdown-item" %></li>
-</ul>
+<li class="nav-item dropdown">
+  <button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center gap-1 border-0" 
+          type="button" 
+          id="userDropdown" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false">
+    <i class="fas fa-user-circle"></i>
+    <span>Mon profil</span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+    <li>
+      <%= link_to user_path(current_user), class: "dropdown-item d-flex align-items-center gap-2" do %>
+        <i class="fas fa-user"></i>
+        <span>Mon profil</span>
+      <% end %>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+      <%= link_to destroy_user_session_path, method: :delete, class: "dropdown-item d-flex align-items-center gap-2" do %>
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Se déconnecter</span>
+      <% end %>
+    </li>
+  </ul>
+</li>
 ```
 
-### **2. JavaScript de réinitialisation automatique**
-```javascript
-// Dans app/views/layouts/application.html.erb
-<script>
-  // Fix Bootstrap dropdowns with Turbo Drive
-  document.addEventListener('turbo:load', function() {
-    // Re-initialize all dropdowns
-    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-      return new bootstrap.Dropdown(dropdownToggleEl);
-    });
-    
-    // Close dropdowns when clicking on links
-    document.querySelectorAll('.dropdown-item').forEach(function(item) {
-      item.addEventListener('click', function() {
-        var dropdown = bootstrap.Dropdown.getInstance(item.closest('.dropdown').querySelector('.dropdown-toggle'));
-        if (dropdown) {
-          dropdown.hide();
-        }
-      });
-    });
-  });
-  
-  // Also fix on page refresh
-  document.addEventListener('DOMContentLoaded', function() {
-    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-    var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-      return new bootstrap.Dropdown(dropdownToggleEl);
-    });
-    
-    // Close dropdowns when clicking on links
-    document.querySelectorAll('.dropdown-item').forEach(function(item) {
-      item.addEventListener('click', function() {
-        var dropdown = bootstrap.Dropdown.getInstance(item.closest('.dropdown').querySelector('.dropdown-toggle'));
-        if (dropdown) {
-          dropdown.hide();
-        }
-      });
-    });
-  });
-</script>
-```
+### **2. Aucun JavaScript personnalisé nécessaire**
+- ✅ **Bootstrap seul** gère les dropdowns
+- ✅ **Pas de conflit** avec Turbo Drive
+- ✅ **Plus simple** et plus fiable
 
-### **3. Styles CSS pour le thème sombre**
+### **3. Styles CSS pour le thème sombre et les boutons**
 ```css
 /* Dans app/assets/stylesheets/application.css */
 .dropdown-menu {
@@ -96,20 +72,39 @@
 .dropdown-divider {
   border-color: rgba(79, 163, 209, 0.2);
 }
+
+/* Boutons dropdown qui ressemblent aux liens nav */
+.navbar-nav .btn-link.nav-link {
+  color: var(--gr-ice);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.navbar-nav .btn-link.nav-link:hover,
+.navbar-nav .btn-link.nav-link:focus {
+  color: var(--gr-highlight);
+  background-color: rgba(79, 163, 209, 0.1);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
 ```
 
 ## 🎯 **Comment ça fonctionne**
 
-### **Événements Turbo :**
-- `turbo:load` : Se déclenche à chaque navigation Turbo (changement de page)
-- `DOMContentLoaded` : Se déclenche au chargement initial de la page
+### **Approche Bootstrap Pure :**
+- **Boutons natifs** avec `data-bs-toggle="dropdown"`
+- **IDs uniques** pour l'accessibilité (`aria-labelledby`)
+- **Bootstrap gère tout** automatiquement
+- **Pas de conflit** avec Turbo Drive
 
-### **Processus de réparation :**
-1. **Navigation Turbo** → `turbo:load` se déclenche
-2. **Sélection** de tous les `.dropdown-toggle`
-3. **Réinitialisation** des instances Bootstrap Dropdown
-4. **Re-attachement** des event listeners pour fermer le dropdown
-5. **Dropdown fonctionnel** immédiatement
+### **Avantages de cette approche :**
+1. **Plus simple** - Moins de code à maintenir
+2. **Plus fiable** - Bootstrap natif, pas de hack
+3. **Meilleure accessibilité** - Standards HTML5
+4. **Performance** - Pas de JavaScript custom
 
 ## 📚 **Références techniques**
 
@@ -125,26 +120,24 @@
 
 ## 🚀 **Résultat**
 
-✅ **Dropdown fonctionne à 100%** après chaque navigation  
-✅ **Plus besoin de recharger** la page  
-✅ **UX fluide** et professionnelle  
+✅ **Dropdown fonctionne à 100%** - Plus de problème "un coup sur 2"  
+✅ **Code plus simple** - Bootstrap pur, pas de JavaScript custom  
+✅ **Meilleure performance** - Pas de réinitialisation manuelle  
+✅ **Standards respectés** - Boutons HTML5 pour les dropdowns  
 ✅ **Compatible** avec le thème sombre Grenoble Roller  
 
 ## 🔄 **Application à d'autres composants**
 
-Cette solution peut être étendue à d'autres composants Bootstrap qui ont des problèmes similaires :
-- Modals
-- Tooltips
-- Popovers
-- Carousels
+Cette approche Bootstrap pure peut être utilisée pour tous les composants :
+- **Modals** : `<button data-bs-toggle="modal">`
+- **Tooltips** : `data-bs-toggle="tooltip"`
+- **Popovers** : `data-bs-toggle="popover"`
+- **Carousels** : Bootstrap gère automatiquement
 
-**Pattern général :**
-```javascript
-document.addEventListener('turbo:load', function() {
-  // Réinitialiser tous les composants Bootstrap problématiques
-  // Re-attacher les event listeners
-});
-```
+**Principe général :**
+- Utiliser les **attributs Bootstrap natifs**
+- Éviter le **JavaScript personnalisé**
+- Respecter les **standards HTML5**
 
 ---
 **Date :** Décembre 2024  

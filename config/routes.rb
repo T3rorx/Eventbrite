@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   resources :attendances
   resources :events
   resources :users
+  
+  # Routes personnalisées pour la modification du mot de passe
+  get 'password/edit', to: 'passwords#edit', as: :edit_password
+  patch 'password', to: 'passwords#update', as: :password
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

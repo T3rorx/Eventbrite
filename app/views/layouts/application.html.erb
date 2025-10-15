@@ -28,47 +28,96 @@
 
   <body>
     <div class="app-shell">
-      <header>
+      <header class="navbar-container">
         <nav class="navbar navbar-expand-lg navbar-dark navbar-gr">
           <div class="container-fluid">
             <%= link_to root_path, class: "navbar-brand d-flex align-items-center gap-2" do %>
-              <img src="/Grenoble_Roller/logo.png" alt="Grenoble Roller" width="40" height="20">
-              <span>Grenoble Roller</span>
+              <div class="brand-logo">
+                <img src="/Grenoble_Roller/logo.png" alt="Grenoble Roller" width="45" height="22">
+              </div>
+              <div class="brand-text">
+                <span class="brand-title">Grenoble Roller</span>
+                <small class="brand-subtitle">Communauté</small>
+              </div>
             <% end %>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="mainNavbar">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <%= link_to "Accueil", root_path, class: "nav-link" %>
+                  <%= link_to root_path, class: "nav-link d-flex align-items-center gap-1" do %>
+                    <i class="fas fa-home"></i>
+                    <span>Accueil</span>
+                  <% end %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to "Tous les événements", events_path, class: "nav-link" %>
+                  <%= link_to events_path, class: "nav-link d-flex align-items-center gap-1" do %>
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Événements</span>
+                  <% end %>
                 </li>
                 <li class="nav-item">
-                  <%= link_to "Créer un événement", defined?(new_event_path) ? new_event_path : "#", class: "nav-link" %>
+                  <%= link_to defined?(new_event_path) ? new_event_path : "#", class: "nav-link d-flex align-items-center gap-1" do %>
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Créer</span>
+                  <% end %>
                 </li>
               </ul>
+              
               <ul class="navbar-nav mb-2 mb-lg-0">
                 <% if user_signed_in? %>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-turbo="false" aria-expanded="false">
-                      Mon profil
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li><%= link_to "Mon profil", user_path(current_user), class: "dropdown-item", data: { turbo: false } %></li>
-                      <li><%= link_to "Se déconnecter", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %></li>
+                    <button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center gap-1 border-0" 
+                            type="button" 
+                            id="userDropdown" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                      <i class="fas fa-user-circle"></i>
+                      <span>Mon profil</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                      <li>
+                        <%= link_to user_path(current_user), class: "dropdown-item d-flex align-items-center gap-2" do %>
+                          <i class="fas fa-user"></i>
+                          <span>Mon profil</span>
+                        <% end %>
+                      </li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li>
+                        <%= link_to destroy_user_session_path, method: :delete, class: "dropdown-item d-flex align-items-center gap-2" do %>
+                          <i class="fas fa-sign-out-alt"></i>
+                          <span>Se déconnecter</span>
+                        <% end %>
+                      </li>
                     </ul>
                   </li>
                 <% else %>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-turbo="false" aria-expanded="false">
-                      S'inscrire / Se connecter
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                      <li><%= link_to "S'inscrire", defined?(new_user_registration_path) ? new_user_registration_path : "#", class: "dropdown-item", data: { turbo: false } %></li>
-                      <li><%= link_to "Se connecter", new_user_session_path, class: "dropdown-item", data: { turbo: false } %></li>
+                    <button class="btn btn-link nav-link dropdown-toggle d-flex align-items-center gap-1 border-0" 
+                            type="button" 
+                            id="authDropdown" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false">
+                      <i class="fas fa-user-plus"></i>
+                      <span>Connexion</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="authDropdown">
+                      <li>
+                        <%= link_to defined?(new_user_registration_path) ? new_user_registration_path : "#", class: "dropdown-item d-flex align-items-center gap-2" do %>
+                          <i class="fas fa-user-plus"></i>
+                          <span>S'inscrire</span>
+                        <% end %>
+                      </li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li>
+                        <%= link_to new_user_session_path, class: "dropdown-item d-flex align-items-center gap-2" do %>
+                          <i class="fas fa-sign-in-alt"></i>
+                          <span>Se connecter</span>
+                        <% end %>
+                      </li>
                     </ul>
                   </li>
                 <% end %>
@@ -86,18 +135,91 @@
         <%= yield %>
       </main>
 
-      <footer class="mt-5">
-        <div class="container py-4">
-          <div class="row align-items-center">
-            <div class="col-12 col-md-6">
-              <div class="footer-brand d-flex align-items-center gap-2">
-                <img src="/Grenoble_Roller/logo.png" alt="Grenoble Roller" width="60" height="25">
-                <span>Grenoble Roller</span>
+      <footer class="footer-modern mt-5">
+        <div class="container py-5">
+          <div class="row g-4">
+            <!-- Brand Section -->
+            <div class="col-lg-4 col-md-6">
+              <div class="footer-brand">
+                <div class="brand-logo mb-3">
+                  <img src="/Grenoble_Roller/logo.png" alt="Grenoble Roller" width="80" height="40">
+                  <span class="brand-name">Grenoble Roller</span>
+                </div>
+                <p class="footer-description">
+                  La plateforme de référence pour découvrir et organiser des événements roller dans la région grenobloise. 
+                  Rejoignez notre communauté passionnée !
+                </p>
               </div>
             </div>
-            <div class="col-12 col-md-6 text-md-end mt-3 mt-md-0">
-              <div class="footer-social">
-                <%= link_to "Contact", "mailto:contact@grenoble-roller.org", class: "btn btn-outline-secondary btn-sm" %>
+            
+            <!-- Quick Links -->
+            <div class="col-lg-2 col-md-6">
+              <h6 class="footer-title">Navigation</h6>
+              <ul class="footer-links">
+                <li><%= link_to "Accueil", root_path, class: "footer-link" %></li>
+                <li><%= link_to "Tous les événements", events_path, class: "footer-link" %></li>
+                <li><%= link_to "Créer un événement", new_event_path, class: "footer-link" %></li>
+                <% if user_signed_in? %>
+                  <li><%= link_to "Mon profil", user_path(current_user), class: "footer-link" %></li>
+                <% end %>
+              </ul>
+            </div>
+            
+            <!-- Community -->
+            <div class="col-lg-3 col-md-6">
+              <h6 class="footer-title">Communauté</h6>
+              <ul class="footer-links">
+                <li><%= link_to "S'inscrire", new_user_registration_path, class: "footer-link" %></li>
+                <li><%= link_to "Se connecter", new_user_session_path, class: "footer-link" %></li>
+                <% if user_signed_in? %>
+                  <li><%= link_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "footer-link" %></li>
+                <% end %>
+              </ul>
+            </div>
+            
+            <!-- Contact -->
+            <div class="col-lg-3 col-md-6">
+              <h6 class="footer-title">Contact</h6>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <i class="fas fa-envelope text-gr-highlight me-2"></i>
+                  <%= link_to "contact@grenoble-roller.org", "mailto:contact@grenoble-roller.org", class: "footer-link" %>
+                </div>
+                <div class="contact-item">
+                  <i class="fas fa-map-marker-alt text-gr-highlight me-2"></i>
+                  <span class="footer-text">Grenoble, France</span>
+                </div>
+                <div class="social-links mt-3">
+                  <h6 class="footer-title mb-2">Suivez-nous</h6>
+                  <div class="social-icons">
+                    <a href="#" class="social-icon" title="Facebook">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="Instagram">
+                      <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon" title="Twitter">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Bottom Bar -->
+          <hr class="footer-divider">
+          <div class="row align-items-center">
+            <div class="col-md-6">
+              <p class="footer-copyright">
+                &copy; <%= Date.current.year %> Grenoble Roller. Tous droits réservés.
+              </p>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <div class="footer-bottom-links">
+                <%= link_to "Mentions légales", "#", class: "footer-link small" %>
+                <span class="mx-2">•</span>
+                <%= link_to "Politique de confidentialité", "#", class: "footer-link small" %>
               </div>
             </div>
           </div>
@@ -105,44 +227,5 @@
       </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
-    <script>
-      // Fix Bootstrap dropdowns with Turbo Drive
-      document.addEventListener('turbo:load', function() {
-        // Re-initialize all dropdowns
-        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-          return new bootstrap.Dropdown(dropdownToggleEl);
-        });
-        
-        // Close dropdowns when clicking on links
-        document.querySelectorAll('.dropdown-item').forEach(function(item) {
-          item.addEventListener('click', function() {
-            var dropdown = bootstrap.Dropdown.getInstance(item.closest('.dropdown').querySelector('.dropdown-toggle'));
-            if (dropdown) {
-              dropdown.hide();
-            }
-          });
-        });
-      });
-      
-      // Also fix on page refresh
-      document.addEventListener('DOMContentLoaded', function() {
-        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
-        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
-          return new bootstrap.Dropdown(dropdownToggleEl);
-        });
-        
-        // Close dropdowns when clicking on links
-        document.querySelectorAll('.dropdown-item').forEach(function(item) {
-          item.addEventListener('click', function() {
-            var dropdown = bootstrap.Dropdown.getInstance(item.closest('.dropdown').querySelector('.dropdown-toggle'));
-            if (dropdown) {
-              dropdown.hide();
-            }
-          });
-        });
-      });
-    </script>
   </body>
 </html>
